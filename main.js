@@ -12,15 +12,19 @@ var balance = 0;
 
 // Show pop-up form
 function showPopUp() {
-  popupWrapepr.style.display = "flex"; // Show the pop-up form
+  popupWrapepr.style.display = "flex";
 }
 
 // Hide pop-up form
 function hidePopUp() {
-  popupWrapepr.style.display = "none"; // Hide the pop-up form
+  popupWrapepr.style.display = "none";
+  resetForm();
 }
 
-addButton.addEventListener("click", showPopUp);
+addButton.addEventListener("click", () => {
+  form.setAttribute("data-form-mode", "add");
+  showPopUp();
+});
 
 cancelButton.addEventListener("click", hidePopUp);
 
@@ -40,8 +44,8 @@ function populateTable(entries, type = "all") {
           <td>${entry.type}</td>
           <td>${entry.amount}</td>
           <td>
-            <button class="edit-btn" data-id="${entry.id}">Edit</button>
-            <button class="delete-btn" data-id="${entry.id}">Delete</button>
+            <button class="edit-btn text-blue-400 hover:text-blue-500" data-id="${entry.id}">Edit</button>
+            <button class="delete-btn text-red-400 hover:text-red-500" data-id="${entry.id}">Delete</button>
           </td>
         `;
     tableBody.appendChild(row);
@@ -63,8 +67,11 @@ function populateTable(entries, type = "all") {
   editButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
       const entryId = e.target.getAttribute("data-id");
+
+      form.setAttribute("data-form-mode", "edit");
+      form.setAttribute("data-id", entryId);
+
       const entryToEdit = entries.find((entry) => entry.id === entryId);
-      console.log(entryToEdit, "entryToEdit");
       populateFormForEdit(entryToEdit);
       showPopUp();
     });
@@ -75,7 +82,7 @@ function populateTable(entries, type = "all") {
   deleteButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
       const entryId = e.target.getAttribute("data-id");
-      deleteData(entryId); // Delete the entry
+      deleteData(entryId);
     });
   });
 }
@@ -156,7 +163,7 @@ async function postData(data) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const result = await response.json();
+    form.reset();
     getData();
   } catch (error) {
     console.error("Error posting data:", error);
@@ -166,7 +173,6 @@ async function postData(data) {
 
 // Update existing entry
 async function updateData(id, data) {
-  console.log(id, "currebt");
   try {
     const response = await fetch(
       `https://67697dcd863eaa5ac0dbd3d4.mockapi.io/incomeExpense/entries/${id}`,
@@ -178,13 +184,11 @@ async function updateData(id, data) {
         body: JSON.stringify(data),
       }
     );
+    getData();
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-
-    const result = await response.json();
-    deleteData(id);
   } catch (error) {
     console.error("Error updating data:", error);
     throw error;
@@ -205,10 +209,17 @@ async function deleteData(id) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    getData(); // Refresh the data after deletion
+    getData();
   } catch (error) {
     console.error("Error deleting data:", error);
   }
+}
+
+// Reset the form state
+function resetForm() {
+  form.reset();
+  form.removeAttribute("data-mode");
+  form.removeAttribute("data-id");
 }
 
 // Handle form submission (Add or Edit)
@@ -225,15 +236,15 @@ form.addEventListener("submit", function (event) {
     amount: parseInt(amount),
   };
 
-  if (form.dataset.mode === "edit") {
-    const entryId = form.dataset.id;
-    updateData(entryId, addData); // Update existing entry
+  if (form.getAttribute("data-form-mode") === "edit") {
+    const entryId = form.getAttribute("data-id");
+    updateData(entryId, addData);
   } else {
-    postData(addData); // Add new entry
+    postData(addData);
   }
 
-  hidePopUp(); // Hide pop-up after submitting
+  resetForm();
+  hidePopUp();
 });
 
-// Initialize app by fetching data
 getData();

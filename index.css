@@ -49,13 +49,11 @@ body {
 
 .card {
   background-color: #ffffff;
-  min-width: 50rem;
   display: flex;
+  height: 100vh;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   gap: 1rem;
-  padding: 3rem 3rem;
 }
 
 .form {
@@ -64,19 +62,41 @@ body {
 
 table {
   width: 100%;
-  border-collapse: collapse; /* Ensures no extra spacing between cells */
+  border-collapse: collapse;
 }
+
+thead {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+tbody {
+  display: block;
+  max-height: calc(100vh - 30%);
+  overflow-y: auto;
+  width: 100%;
+}
+
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
 th,
 td {
   padding: 10px;
   text-align: left;
 }
+
 th {
   background-color: #f2f2f2;
   font-weight: bold;
 }
+
 tr:nth-child(even) {
-  background-color: #f9f9f9; /* Alternating row colors for better readability */
+  background-color: #f9f9f9;
 }
 
 .pop-up {
@@ -107,7 +127,6 @@ input {
   height: 20rem;
   top: 0;
   padding: 3rem;
-  /* Initially hide the pop-up */
   flex-direction: column;
   justify-content: space-between;
 }
@@ -120,4 +139,97 @@ input {
   align-items: center;
   justify-content: center;
   background: #80808085;
+}
+
+#openPopup {
+  align-self: flex-end;
+}
+
+#popup-wrapper {
+  display: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.pop-up {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.pop-up label {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.pop-up label span {
+  margin-left: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.pop-up input[type="text"],
+.pop-up input[type="number"] {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.pop-up input[type="text"]::placeholder,
+.pop-up input[type="number"]::placeholder {
+  color: #aaa;
+}
+
+.form-button {
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+  opacity: 0.9;
+}
+
+.bg-red-500 {
+  background-color: #e53e3e;
+}
+
+.bg-green-500 {
+  background-color: #38a169;
+}
+
+.rounded {
+  border-radius: 5px;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.justify-between {
+  justify-content: space-between;
 }
