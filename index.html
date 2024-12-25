@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Income Expense Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <div class="container-wrapper relative">
+      <div class="card">
+        <h2>Income Expense Calculator</h2>
+        <div class="ratio">
+          <div>Total Income: <span id="totalIncome"> 0 </span></div>
+          <div>Total Expense: <span id="totalExpense"> 0 </span></div>
+          <div>Net Balance: <span id="netBalance"> 0 </span></div>
+        </div>
+
+        <div class="filters">
+          <div class="filter">
+            <input type="radio" id="all" name="filter" value="all" checked />
+            <label for="all">All</label>
+          </div>
+          <div class="filter">
+            <input type="radio" id="income" name="filter" value="income" />
+            <label for="income">Income</label>
+          </div>
+          <div class="filter">
+            <input type="radio" id="expense" name="filter" value="expense" />
+            <label for="expense">Expense</label>
+          </div>
+        </div>
+        <button
+          id="openPopup"
+          class="form-button bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Add Entry
+        </button>
+        <table>
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="entry-table"></tbody>
+        </table>
+      </div>
+
+      <!-- Pop-up Form (Initially hidden) -->
+      <div id="popup-wrapper" class="absolute">
+        <form id="myForm" class="pop-up bg-white-500">
+          <div>
+            <div>
+              <label>
+                <input name="type" type="radio" value="Income" required />
+                <span> Income </span>
+              </label>
+              <label>
+                <input name="type" type="radio" value="Expense" required />
+                <span> Expense </span>
+              </label>
+            </div>
+            <div>
+              <input
+                name="description"
+                type="text"
+                placeholder="Description"
+                required
+              />
+            </div>
+            <div>
+              <input
+                name="amount"
+                type="number"
+                placeholder="Amount"
+                required
+              />
+            </div>
+          </div>
+          <div class="flex justify-between">
+            <button
+              id="closePopup"
+              class="form-button bg-red-500 rounded text-[#ffffff] px-2 py-1"
+              type="button"
+            >
+              Cancel
+            </button>
+            <button
+              id="submitButton"
+              class="form-button bg-green-500 rounded text-[#ffffff] px-2 py-1"
+              type="submit"
+            >
+              Add
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="./main.js"></script>
+  </body>
+</html>
