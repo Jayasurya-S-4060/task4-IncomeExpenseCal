@@ -1,4 +1,3 @@
-// Variables
 const tableBody = document.getElementById("entry-table");
 const form = document.getElementById("myForm");
 const addButton = document.getElementById("openPopup");
@@ -10,12 +9,10 @@ var totalIncome = 0;
 var totalExpense = 0;
 var balance = 0;
 
-// Show pop-up form
 function showPopUp() {
   popupWrapepr.style.display = "flex";
 }
 
-// Hide pop-up form
 function hidePopUp() {
   popupWrapepr.style.display = "none";
   resetForm();
@@ -28,7 +25,7 @@ addButton.addEventListener("click", () => {
 
 cancelButton.addEventListener("click", hidePopUp);
 
-// Populate table with entries
+// to add entries to table
 function populateTable(entries, type = "all") {
   tableBody.innerHTML = "";
 
@@ -62,7 +59,7 @@ function populateTable(entries, type = "all") {
 
   document.getElementById("filters");
 
-  // Add event listeners to Edit buttons
+  // Add click funtion to Edit buttons
   const editButtons = document.querySelectorAll(".edit-btn");
   editButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
@@ -77,7 +74,7 @@ function populateTable(entries, type = "all") {
     });
   });
 
-  // Add event listeners to Delete buttons
+  // to delete entry
   const deleteButtons = document.querySelectorAll(".delete-btn");
   deleteButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
@@ -87,7 +84,6 @@ function populateTable(entries, type = "all") {
   });
 }
 
-// Populate form with data for editing
 function populateFormForEdit(entry) {
   const descriptionInput = form.querySelector('input[name="description"]');
   const amountInput = form.querySelector('input[name="amount"]');
@@ -100,7 +96,7 @@ function populateFormForEdit(entry) {
   typeInput.checked = true;
 }
 
-// Calculate totals and balance
+// calculate ratio
 function calculateRatio(entries) {
   totalIncome = 0;
   totalExpense = 0;
@@ -125,7 +121,7 @@ function calculateRatio(entries) {
   balanceElem.innerHTML = balance;
 }
 
-// Fetch data from the API
+// get data
 async function getData() {
   try {
     const response = await fetch(
@@ -145,7 +141,7 @@ async function getData() {
   }
 }
 
-// Post new data to the API
+// Post data
 async function postData(data) {
   try {
     const response = await fetch(
@@ -171,7 +167,7 @@ async function postData(data) {
   }
 }
 
-// Update existing entry
+// edit entry
 async function updateData(id, data) {
   try {
     const response = await fetch(
@@ -195,7 +191,7 @@ async function updateData(id, data) {
   }
 }
 
-// Delete an entry
+// Delete  entry
 async function deleteData(id) {
   try {
     const response = await fetch(
@@ -215,14 +211,14 @@ async function deleteData(id) {
   }
 }
 
-// Reset the form state
+// Reset all
 function resetForm() {
   form.reset();
   form.removeAttribute("data-mode");
   form.removeAttribute("data-id");
 }
 
-// Handle form submission (Add or Edit)
+// Handle form add edit
 form.addEventListener("submit", function (event) {
   event.preventDefault();
 
